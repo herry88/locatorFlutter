@@ -31,34 +31,55 @@ class _GeoListenPageState extends State<GeoListenPage> {
           title: new Text("Location"),
 
         ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              userLocation == null
-                  ? CircularProgressIndicator()
-                  : Text("Location:" +
-                  userLocation.latitude.toString() +
-                  " " +
-                  userLocation.longitude.toString()),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: RaisedButton(
-                  onPressed: () {
-                    _getLocation().then((value) {
-                      setState(() {
-                        userLocation = value;
-                      });
-                    });
-                  },
-                  color: Colors.blue,
-                  child: Text(
-                    "Get Location",
-                    style: TextStyle(color: Colors.white),
-                  ),
+        body: Form(
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                userLocation == null
+                    ? CircularProgressIndicator()
+                    : Text("Location:"
+//                    +
+//                    userLocation.latitude.toString() +
+//                    " " +
+//                    userLocation.longitude.toString()
                 ),
-              ),
-            ],
+                
+                Column(
+                  children: <Widget>[
+                    new TextFormField(
+                      initialValue: userLocation.latitude.toString(),
+                    ),
+                    new TextFormField(
+                      initialValue: userLocation.longitude.toString(),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: RaisedButton(
+                        onPressed: () {
+                          _getLocation().then((value) {
+                            setState(() {
+                              userLocation = value;
+                            });
+                          });
+                        },
+                        color: Colors.blue,
+                        child: Text(
+                          "Get Location",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ),
+                    MaterialButton(
+                        onPressed: (){},
+                        color: Colors.redAccent,
+                        child: new Text("Simpan", style: TextStyle(color: Colors.white),),
+                    ),
+                  ],
+
+                ),
+              ],
+            ),
           ),
         ),
       ),
