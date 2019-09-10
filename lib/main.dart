@@ -1,99 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
-import 'dart:async';
+import 'LokasiPage.dart';
 
-void main() => runApp(GeoListenPage());
+void main() => runApp(MyApp());
 
-class GeoListenPage extends StatefulWidget {
-  @override
-  _GeoListenPageState createState() => _GeoListenPageState();
-}
-
-class _GeoListenPageState extends State<GeoListenPage> {
-  Geolocator geolocator = Geolocator();
-
-  Position userLocation;
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    _getLocation().then((position) {
-      userLocation = position;
-    });
-  }
-
+class MyApp extends StatelessWidget {
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: new Text("Location"),
-
-        ),
-        body: Form(
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                userLocation == null
-                    ? CircularProgressIndicator()
-                    : Text("Location:"
-//                    +
-//                    userLocation.latitude.toString() +
-//                    " " +
-//                    userLocation.longitude.toString()
-                ),
-                
-                Column(
-                  children: <Widget>[
-                    new TextFormField(
-                      initialValue: userLocation.latitude.toString(),
-                    ),
-                    new TextFormField(
-                      initialValue: userLocation.longitude.toString(),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: RaisedButton(
-                        onPressed: () {
-                          _getLocation().then((value) {
-                            setState(() {
-                              userLocation = value;
-                            });
-                          });
-                        },
-                        color: Colors.blue,
-                        child: Text(
-                          "Get Location",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ),
-                    ),
-                    MaterialButton(
-                        onPressed: (){},
-                        color: Colors.redAccent,
-                        child: new Text("Simpan", style: TextStyle(color: Colors.white),),
-                    ),
-                  ],
-
-                ),
-              ],
-            ),
-          ),
-        ),
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        // This is the theme of your application.
+        //
+        // Try running your application with "flutter run". You'll see the
+        // application has a blue toolbar. Then, without quitting the app, try
+        // changing the primarySwatch below to Colors.green and then invoke
+        // "hot reload" (press "r" in the console where you ran "flutter run",
+        // or simply save your changes to "hot reload" in a Flutter IDE).
+        // Notice that the counter didn't reset back to zero; the application
+        // is not restarted.
+        primarySwatch: Colors.blue,
       ),
+      home: GeoListenPage(title: 'Contoh',),
     );
-  }
-
-  Future<Position> _getLocation() async {
-    var currentLocation;
-    try {
-      currentLocation = await geolocator.getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.best);
-    } catch (e) {
-      currentLocation = null;
-    }
-    return currentLocation;
   }
 }
